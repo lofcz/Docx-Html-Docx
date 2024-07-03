@@ -1,15 +1,25 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<AssemblyTitle>HTMLtoDOCX.Converter</AssemblyTitle>
-		<Product>HTMLtoDOCX.Converter</Product>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
-		<PackageReference Include="HtmlToOpenXml.dll" Version="2.4.2" />
-		<PackageReference Include="OpenXmlPowerTools-NetStandard" Version="4.4.21" />
-		<PackageReference Include="System.Drawing.Common" Version="8.0.6" />
-	</ItemGroup>
+<?xml version="1.0" encoding="utf-16"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.props')" />
+    <PropertyGroup>
+        <PackageOutputPath>$(SolutionDir)Packages/</PackageOutputPath>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyTitle>HTMLtoDOCX.Converter</AssemblyTitle>
+        <Product>HTMLtoDOCX.Converter</Product>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <PackageId>Net4x.$(AssemblyName)</PackageId>
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\DocxToHTML.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
+        <PackageReference Include="HtmlToOpenXml.dll" Version="2.4.2" />
+        <PackageReference Include="OpenXmlPowerTools-NetStandard" Version="4.4.21" />
+        <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+        <PackageReference Include="NuGetUtility" Version="$(NuGetUtilityVersion)" PrivateAssets="All" />
+    </ItemGroup>
+    <Import Project="$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets" Condition="Exists('$(NuGetPackageRoot)nugetutility/$(NuGetUtilityVersion)/build/NuGet.Utility.targets')" />
 </Project>
