@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocxToHTML.Converter", "DocxToHTML.Converter\DocxToHTML.Converter.csproj", "{B5447989-A3E9-4278-9BA7-8DECFFDF4842}"
+Project("{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}") = "Docx2Html", "Docx2Html\Docx2Html.csproj", "{B5447989-A3E9-4278-9BA7-8DECFFDF4842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTMLtoDOCX.Converter", "HTMLtoDOCX.Converter\HTMLtoDOCX.Converter.csproj", "{52C3A9EE-D306-419F-BFFC-41F054DE5351}"
+Project("{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Docx", "Html2Docx\Html2Docx.csproj", "{52C3A9EE-D306-419F-BFFC-41F054DE5351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

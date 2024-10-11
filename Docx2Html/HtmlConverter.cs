@@ -1,12 +1,12 @@
-﻿using System.IO;
+﻿using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
-using OpenXmlPowerTools;
-using DocumentFormat.OpenXml.Packaging;
-using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DocumentFormat.OpenXml.Packaging;
+using OpenXmlPowerTools;
 
-namespace DocxToHTML.Converter;
+namespace Docx2Html;
 
 public static class HtmlConverter
 {

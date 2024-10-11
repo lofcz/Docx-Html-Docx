@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<AssemblyTitle>HTMLtoDOCX.Converter</AssemblyTitle>
-		<Product>HTMLtoDOCX.Converter</Product>
+		<AssemblyTitle>Html2DocxCore</AssemblyTitle>
+		<Product>Html2DocxCore</Product>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<PackageId>Html2DocxCore</PackageId>
@@ -11,6 +11,8 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>html2docx</PackageTags>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<AssemblyName>Html2DocxCore</AssemblyName>
+		<RootNamespace>Html2DocxCore</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
