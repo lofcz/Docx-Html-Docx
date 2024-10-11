@@ -27,7 +27,7 @@ public static class Html2Docx
     {
         try
         {
-            using MemoryStream generatedDocument = new MemoryStream();
+            await using MemoryStream generatedDocument = new MemoryStream();
             using WordprocessingDocument package = WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document);
             
             MainDocumentPart? mainPart = package.MainDocumentPart;
@@ -51,8 +51,8 @@ public static class Html2Docx
                 await converter.ParseFooter(footerHtml, HeaderFooterValues.Default, token);
             }
             
-            mainPart.Document.Save();
-
+            package.Save();
+            
             if (File.Exists(filename))
             {
                 File.Delete(filename);
