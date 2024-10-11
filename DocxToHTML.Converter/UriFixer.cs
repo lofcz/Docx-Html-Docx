@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -13,26 +14,26 @@ public static class UriFixer
     {
 
         XNamespace relNs = "http://schemas.openxmlformats.org/package/2006/relationships";
-        using var za = new ZipArchive(fs, ZipArchiveMode.Update);
-        foreach (var entry in za.Entries.ToList())
+        using ZipArchive? za = new ZipArchive(fs, ZipArchiveMode.Update);
+        foreach (ZipArchiveEntry? entry in za.Entries.ToList())
         {
             if (!entry.Name.EndsWith(".rels"))
                 continue;
-            var replaceEntry = false;
+            bool replaceEntry = false;
             XDocument? entryXDoc;
-            using (var entryStream = entry.Open())
+            using (Stream? entryStream = entry.Open())
             {
                 try
                 {
                     entryXDoc = XDocument.Load(entryStream);
                     if (entryXDoc.Root != null && entryXDoc.Root.Name.Namespace == relNs)
                     {
-                        var urisToCheck = entryXDoc
+                        IEnumerable<XElement>? urisToCheck = entryXDoc
                             .Descendants(relNs + "Relationship")
                             .Where(r => r.Attribute("TargetMode") != null && (string)r.Attribute("TargetMode") == "External");
-                        foreach (var rel in urisToCheck)
+                        foreach (XElement? rel in urisToCheck)
                         {
-                            var target = (string)rel.Attribute("Target");
+                            string? target = (string)rel.Attribute("Target");
                             if (target != null)
                             {
                                 try
@@ -41,7 +42,7 @@ public static class UriFixer
                                 }
                                 catch (UriFormatException)
                                 {
-                                    var newUri = invalidUriHandler(target);
+                                    string? newUri = invalidUriHandler(target);
                                     rel.Attribute("Target")!.Value = newUri;
                                     replaceEntry = true;
                                 }
@@ -56,11 +57,11 @@ public static class UriFixer
             }
             if (replaceEntry)
             {
-                var fullName = entry.FullName;
+                string? fullName = entry.FullName;
                 entry.Delete();
-                var newEntry = za.CreateEntry(fullName);
-                using var writer = new StreamWriter(newEntry.Open());
-                using var xmlWriter = XmlWriter.Create(writer);
+                ZipArchiveEntry? newEntry = za.CreateEntry(fullName);
+                using StreamWriter? writer = new StreamWriter(newEntry.Open());
+                using XmlWriter? xmlWriter = XmlWriter.Create(writer);
                 entryXDoc.WriteTo(xmlWriter);
             }
         }

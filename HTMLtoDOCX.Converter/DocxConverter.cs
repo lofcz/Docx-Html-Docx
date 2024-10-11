@@ -1,42 +1,48 @@
-﻿using DocumentFormat.OpenXml;
+﻿using System;
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using HtmlToOpenXml;
 
 namespace HTMLtoDOCX.Converter;
 
-public class DocxConverter
+public static class DocxConverter
 {
-    public int ConvertToDocx(string html, string filename)
+    public static async Task<Exception?> ConvertToDocx(string html, string filename, CancellationToken token = default)
     {
         try
         {
-            if (File.Exists(filename)) File.Delete(filename);
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
 
-            using var generatedDocument = new MemoryStream();
-            using var package = WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document);
-            var mainPart = package.MainDocumentPart;
-            if (mainPart == null)
+            using MemoryStream generatedDocument = new MemoryStream();
+            using WordprocessingDocument package = WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document);
+            
+            MainDocumentPart? mainPart = package.MainDocumentPart;
+            
+            if (mainPart is null)
             {
                 mainPart = package.AddMainDocumentPart();
                 new Document(new Body()).Save(mainPart);
             }
 
-            var converter = new HtmlConverter(mainPart);
-            converter.ParseHtml(html);
+            HtmlConverter converter = new HtmlConverter(mainPart);
+            await converter.ParseBody(html, token);
 
             mainPart.Document.Save();
 
-            File.WriteAllBytes(filename, generatedDocument.ToArray());
-
-            return 1;
+            await File.WriteAllBytesAsync(filename, generatedDocument.ToArray(), token);
+            return null;
         }
-        catch 
+        catch (Exception e)
         {
-            return -1;
+            return e;
         }
-
     }
 
 }
