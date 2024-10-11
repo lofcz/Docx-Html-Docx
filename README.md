@@ -1,2 +1,8 @@
 # Html2Docx Core
-Using C#, Convert Doc file to Html and vice-versa
+
+## Getting Started
+
+Install Html2Docx via NuGet:
+```
+Install-Package Html2DocxCore
+```
