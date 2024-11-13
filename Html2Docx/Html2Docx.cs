@@ -21,9 +21,10 @@ public static class Html2Docx
     /// <param name="filename">Path where the output will be stored. Existing file will be deleted if necessary</param>
     /// <param name="headerHtml">Header HTML, will be displayed on every page</param>
     /// <param name="footerHtml">Footer HTML, will be displayed on every page</param>
+    /// <param name="settingsFn">Configures underlying <see cref="HtmlConverter"/></param>
     /// <param name="token">Optional cancellation token</param>
     /// <returns></returns>
-    public static async Task<Exception?> Convert(string html, string filename, string? headerHtml = null, string? footerHtml = null, CancellationToken token = default)
+    public static async Task<Exception?> Convert(string html, string filename, string? headerHtml = null, string? footerHtml = null, Action<HtmlConverter>? settingsFn = null, CancellationToken token = default)
     {
         try
         {
@@ -39,6 +40,8 @@ public static class Html2Docx
             }
 
             HtmlConverter converter = new HtmlConverter(mainPart);
+            settingsFn?.Invoke(converter);
+
             await converter.ParseBody(html, token);
 
             if (headerHtml is not null)
